@@ -1,0 +1,11 @@
+.ingredient {
+  text-align: center;
+  position: relative;
+}
+
+.price {
+  display: flex;
+  gap: 5px;
+  align-items: center;
+  justify-content: center;
+}
