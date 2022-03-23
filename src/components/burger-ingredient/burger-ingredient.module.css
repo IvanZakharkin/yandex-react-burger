@@ -3,6 +3,10 @@
   position: relative;
 }
 
+.ingredient:hover {
+  cursor: pointer;
+}
+
 .price {
   display: flex;
   gap: 5px;

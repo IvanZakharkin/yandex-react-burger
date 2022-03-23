@@ -7,3 +7,21 @@
   background: #8585ad;
   border: 3px solid #8585AD;;
 }
+
+* {
+  box-sizing: border-box;
+}
+
+button:hover {
+  cursor: pointer;
+}
+
+ul {
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
+}
+
+p {
+  margin: 0;
+}

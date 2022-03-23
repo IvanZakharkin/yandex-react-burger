@@ -1,55 +1,61 @@
 import React from "react";
-import { ConstructorElement, DragIcon } from '@ya.praktikum/react-developer-burger-ui-components';
+import PropTypes from "prop-types";
+import { ConstructorElement, DragIcon, Button, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
+import Modal from '../modal/modal';
+import OrderDetails from '../order-details/order-details';
 import styles from './burger-constructor.module.css';
 import cn from 'classnames';
 
-class BurgerConstructor extends React.Component {
-  constructor(props) {
-    super(props);
+import { ingredientPropTypes } from '../../types';
+
+const BurgerConstructor = (props) => {
+  const { ingredients, onShowIngredientDetail } = props;
+
+  const [modalIsVisible, setModalIsVisible] = React.useState(false);
+
+  const closeModal = () => setModalIsVisible(false);
+  const openModal = () => setModalIsVisible(true);
+
+  const bunIndex = ingredients.findIndex((ingredient) => ingredient.type === 'bun');
+
+  if(bunIndex === -1) {
+    return null;
   }
 
-  render() {
-    const { ingredients } = this.props;
+  const bun = ingredients[bunIndex];
+  const otherIngredients = [...ingredients];
+  otherIngredients.splice(bunIndex, 1);
+  const bunComponentProps = {
+    isLocked: true,
+    price: bun.price,
+    text: bun.name,
+    thumbnail: bun.image,
+  };
 
-    const constructorStyle = cn('pt-25 pb-5', styles.constructor);
+  const totalPrice = otherIngredients.reduce((acc, el) => acc += el.price, bun.price * 2)
 
-    const bunIndex = ingredients.findIndex((ingredient) => ingredient.type === 'bun');
-
-    if(bunIndex == -1) {
-      return null;
-    }
-
-    const bun = ingredients[bunIndex];
-    const otherIngredients = [...ingredients];
-    otherIngredients.splice(bunIndex, 1);
-
-    const bunComponentProps = {
-      isLocked: true,
-      price: bun.price,
-      text: bun.name,
-      thumbnail: bun.image,
-    };
-
-    const stylesIngredient = cn('pb-4', styles.ingredient);
-
-
-
-    return (
-      <section className={constructorStyle}>
-        <div className={stylesIngredient}>
+  return (
+    <section className={cn('pt-25', styles['constructor-section'])}>
+      <div className={cn('pb-4', styles.ingredient)}>
         <button className={styles['drag-button']} />
+        <div className="pr-4"></div>
+        <div className={styles['constructor-element']} onClick={() => onShowIngredientDetail(bun)}>
           <ConstructorElement 
             type="top"
             className="test"
             {...bunComponentProps}
           />
         </div>
-        <div>
-          {otherIngredients.map((ingredient) => (
-            <div className={stylesIngredient}>
-              <button className={styles['drag-button']}>
-                <DragIcon type="secondary" />
-              </button>
+      </div>
+      <div className={styles['scroll-list']}>
+        {otherIngredients.map((ingredient, index) => {
+          const style = index === otherIngredients.length - 1 ? styles.ingredient : cn('pb-4', styles.ingredient);
+          return (<div className={style} key={ingredient._id}>
+            <button className={styles['drag-button']}>
+              <DragIcon type="secondary" />
+            </button>
+            <div className="pr-4"></div>
+            <div className={styles['constructor-element']} onClick={() => onShowIngredientDetail(ingredient)}>
               <ConstructorElement
                 key={ingredient._id}
                 price={ingredient.price}
@@ -57,18 +63,47 @@ class BurgerConstructor extends React.Component {
                 thumbnail={ingredient.image}
               />
             </div>
-          ))}
-        </div>
-        <div className={stylesIngredient}>
-          <button className={styles['drag-button']} />
+          </div>)
+        }
+        )}
+      </div>
+      <div className={cn('pt-4', styles.ingredient)}>
+        <button className={styles['drag-button']} />
+        <div className="pr-4"></div>
+        <div className={styles['constructor-element']} onClick={() => onShowIngredientDetail(bun)}>
           <ConstructorElement 
             type="bottom" 
             {...bunComponentProps}
           />
         </div>
-      </section>
-    )
-  }
+      </div>
+      <div className={cn('mt-4', styles.total)}>
+        <div className={cn('text text_type_digits-medium mr-8', styles['total-price'])}>
+          <span className="mr-2">{totalPrice}</span>
+          <span className={styles['total-icon']}>
+            <CurrencyIcon type="primary" />
+          </span>
+        </div>
+        <Button type="primary" size="large" onClick={openModal}>
+          Нажми на меня
+        </Button>
+      </div>
+      {modalIsVisible &&
+        <Modal onClose={closeModal}>
+          <OrderDetails id={14124124} />
+        </Modal>
+      }
+    </section>
+  )
 }
+
+BurgerConstructor.defaultProps = {
+  onShowIngredientDetail: () => {}
+};
+
+BurgerConstructor.propTypes = {
+  ingredients: PropTypes.arrayOf(ingredientPropTypes),
+  onShowIngredientDetail: PropTypes.func
+};
 
 export default BurgerConstructor; 
