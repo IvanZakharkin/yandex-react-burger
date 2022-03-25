@@ -45,7 +45,7 @@ const App = () => {
             !error ? 
             (<div className={styles['constructor-page']}>
               <BurgerIngredients ingredients={ingredientsList} onShowIngredientDetail={setSelectedIngredient}/>
-              <BurgerConstructor ingredients={constructorIngedients} onShowIngredientDetail={setSelectedIngredient}></BurgerConstructor>
+              <BurgerConstructor ingredients={constructorIngedients}></BurgerConstructor>
               {selectedIngredient && 
                 <Modal 
                   onClose={onCloseModal}

@@ -9,7 +9,7 @@ import cn from 'classnames';
 import { ingredientPropTypes } from '../../types';
 
 const BurgerConstructor = (props) => {
-  const { ingredients, onShowIngredientDetail } = props;
+  const { ingredients } = props;
 
   const [modalIsVisible, setModalIsVisible] = React.useState(false);
 
@@ -23,12 +23,10 @@ const BurgerConstructor = (props) => {
   }
 
   const bun = ingredients[bunIndex];
-  const otherIngredients = [...ingredients];
-  otherIngredients.splice(bunIndex, 1);
+  const otherIngredients = ingredients.filter((ingredient) => ingredient.type !== 'bun');
   const bunComponentProps = {
     isLocked: true,
     price: bun.price,
-    text: bun.name,
     thumbnail: bun.image,
   };
 
@@ -39,11 +37,12 @@ const BurgerConstructor = (props) => {
       <div className={cn('pb-4', styles.ingredient)}>
         <button className={styles['drag-button']} />
         <div className="pr-4"></div>
-        <div className={styles['constructor-element']} onClick={() => onShowIngredientDetail(bun)}>
+        <div className={styles['constructor-element']}>
           <ConstructorElement 
             type="top"
             className="test"
-            {...bunComponentProps}
+            {...bunComponentProps }
+            text={`${bun.name} (верх)`}
           />
         </div>
       </div>
@@ -55,7 +54,7 @@ const BurgerConstructor = (props) => {
               <DragIcon type="secondary" />
             </button>
             <div className="pr-4"></div>
-            <div className={styles['constructor-element']} onClick={() => onShowIngredientDetail(ingredient)}>
+            <div className={styles['constructor-element']}>
               <ConstructorElement
                 key={ingredient._id}
                 price={ingredient.price}
@@ -70,10 +69,11 @@ const BurgerConstructor = (props) => {
       <div className={cn('pt-4', styles.ingredient)}>
         <button className={styles['drag-button']} />
         <div className="pr-4"></div>
-        <div className={styles['constructor-element']} onClick={() => onShowIngredientDetail(bun)}>
+        <div className={styles['constructor-element']}>
           <ConstructorElement 
             type="bottom" 
             {...bunComponentProps}
+            text={`${bun.name} (низ)`}
           />
         </div>
       </div>
@@ -97,13 +97,8 @@ const BurgerConstructor = (props) => {
   )
 }
 
-BurgerConstructor.defaultProps = {
-  onShowIngredientDetail: () => {}
-};
-
 BurgerConstructor.propTypes = {
   ingredients: PropTypes.arrayOf(ingredientPropTypes),
-  onShowIngredientDetail: PropTypes.func
 };
 
 export default BurgerConstructor; 
