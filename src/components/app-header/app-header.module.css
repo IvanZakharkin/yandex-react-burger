@@ -1,0 +1,43 @@
+.header {
+  flex: 0 0 auto;
+}
+
+.container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-right: -16px;
+  margin-left: -16px;
+}
+
+.menu {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
+.menu-item:last-child {
+  justify-self: flex-end;
+}
+
+.link {
+  border: none;
+  background: none;
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  gap: 9px;
+  color: inherit;
+}
+
+.link-icon {
+  line-height: 0;
+}
+
+.menu-item-logo {
+  flex: 1;
+  margin-left: 130px;
+}

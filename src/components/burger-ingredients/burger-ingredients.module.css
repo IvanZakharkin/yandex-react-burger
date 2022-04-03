@@ -1,0 +1,16 @@
+.ingredients-section {
+  height: inherit;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.ingredients-list {
+  flex: 1;
+  overflow: auto;
+}
+
+.tabs {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+}
