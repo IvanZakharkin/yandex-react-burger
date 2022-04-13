@@ -1,33 +1,16 @@
 .constructor-section {
+  height: 100%;
   flex: 1;
+}
+
+.constructor-content {
   display: flex;
   flex-direction: column;
+  height: 100%;
 }
 
-.ingredient {
-  display: flex;
-  align-items: center;
-  /* justify-content: space-between; */
-}
-
-.ingredient:hover {
-  cursor: pointer;
-}
-
-.constructor-element {
-  flex: 1;
-  display: flex;
-}
-
-.constructor-element > div  {
-  max-width: none;
-}
-
-.drag-button {
-  background: none;
-  border: none;
-  width: 32px;
-  flex-shrink: 0;
+.constructor-content--empty {
+  border: 2px dashed #4c4cff;
 }
 
 .total {
