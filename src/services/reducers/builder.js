@@ -13,8 +13,6 @@ import {
   RESET_ORDER,
 } from '../actions/builder';
 
-import { v4 as uuidv4 } from 'uuid';
-
 const initialState = {
   detailIngredient: null,
 
@@ -85,12 +83,9 @@ export const builderReducer = (state = initialState, action) => {
       };
     }
     case ADD_ITEM: {
-      const newIngredient = {...state.ingredientsList.find((item) => item._id === action.id), id: uuidv4()};
-      if(newIngredient.type === 'bun') {
-
-      }
-      const newItem = {...state.ingredientsList.find((item) => item._id === action.id), id: uuidv4()};
-      const newItems = newIngredient.type === 'bun' ? state.items.filter((item) => item.type !== 'bun') : state.items;
+      const { ingredientId, itemId } = action.payload;
+      const newItem = {...state.ingredientsList.find((item) => item._id === ingredientId), id: itemId };
+      const newItems = newItem.type === 'bun' ? state.items.filter((item) => item.type !== 'bun') : state.items;
 
       return {
         ...state,
@@ -103,12 +98,12 @@ export const builderReducer = (state = initialState, action) => {
     case DELETE_ITEM: {
       return {
         ...state,
-        items: state.items.filter((item) => item.id !== action.id)
+        items: state.items.filter((item) => item.id !== action.payload.id)
       };
     }
     case MOVE_ITEM: {
-      const itemIndex = state.items.findIndex((item) => item.id === action.id);
-      const toItemIndex = state.items.findIndex((item) => item.id === action.toId);
+      const itemIndex = state.items.findIndex((item) => item.id === action.payload.id);
+      const toItemIndex = state.items.findIndex((item) => item.id === action.payload.toId);
       const item = state.items[itemIndex];
       const newItems = [...state.items];
       newItems.splice(itemIndex, 1);
@@ -121,7 +116,7 @@ export const builderReducer = (state = initialState, action) => {
     case SET_DETAIL_INGREDIENT: {
       return {
         ...state,
-        detailIngredient: action.ingredient
+        detailIngredient: action.payload.ingredient
       };
     }
     case DELETE_DETAIL_INGREDIENT: {

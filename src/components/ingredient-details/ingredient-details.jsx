@@ -1,11 +1,11 @@
 
 
 import styles from './ingredient-details.module.css';
-import PropTypes from 'prop-types';
 import cn from 'classnames';
+import { ingredientPropTypes } from '../../types';
 
-const IngredientDetails = (props) => {
-  const { name, image } = props
+const IngredientDetails = ( {detailIngredient}) => {
+  const { name, image } = detailIngredient;
 
   const nutritionalValueTitles = {
     calories: 'Калории, ккал',
@@ -24,7 +24,7 @@ const IngredientDetails = (props) => {
           Object.entries(nutritionalValueTitles).map(([key, title]) => (
             <li className="text text_type_main-default text_color_inactive" key={key}>
               <p>{title}</p>
-              <p>{props[key] || '-'}</p>
+              <p>{detailIngredient[key] || '-'}</p>
             </li>
           ))
         }
@@ -33,12 +33,7 @@ const IngredientDetails = (props) => {
 } 
 
 IngredientDetails.propTypes = {
-  name: PropTypes.string,
-  proteins: PropTypes.number,
-  fat: PropTypes.number,
-  carbohydrates: PropTypes.number,
-  calories: PropTypes.number,
-  image: PropTypes.string
+  detailIngredient: ingredientPropTypes,
 };
 
 export default IngredientDetails;

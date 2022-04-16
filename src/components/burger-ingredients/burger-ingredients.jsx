@@ -1,11 +1,9 @@
 import { useState, useRef, useMemo, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import PropTypes from 'prop-types';
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 import cn from 'classnames';
 import BurgerIngredientsByType from '../burger-ingredients-by-type/burger-ingredients-by-type';
 import styles from './burger-ingredients.module.css';
-import { ingredientPropTypes } from '../../types';
 import { getIngredientsList } from '../../services/actions/builder';
 import RingLoader from "react-spinners/RingLoader";
 
@@ -99,9 +97,5 @@ const BurgerIngredients = () => {
     </section>
   )
 }
-
-BurgerIngredients.propTypes = {
-  ingredients: PropTypes.arrayOf(ingredientPropTypes),
-};
 
 export default BurgerIngredients; 

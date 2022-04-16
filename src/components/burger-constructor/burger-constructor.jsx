@@ -6,7 +6,7 @@ import cn from 'classnames';
 import { useDrop } from 'react-dnd';
 import { useDispatch, useSelector } from 'react-redux';
 import dndTypes from '../../dnd-types';
-import { ADD_ITEM, placeOrder } from '../../services/actions/builder';
+import { addConstructorItem, placeOrder } from '../../services/actions/builder';
 import BeatLoader from "react-spinners/BeatLoader";
 
 const BurgerConstructor = () => {
@@ -26,11 +26,19 @@ const BurgerConstructor = () => {
   const [, dropTarget ] = useDrop({
     accept: dndTypes.INGREDIENT,
     drop(item) {
-      dispatch({ type: ADD_ITEM, id: item.id })
+      dispatch(addConstructorItem(item.id))
     },
   });
 
-  const toOrder = () => dispatch(placeOrder(ingredients.map((el) => el._id)));
+  const noBun = ingredients.length && !bun;
+  const toOrder = () => {
+    if(noBun || orderRequest) {
+      return;
+    }
+
+    dispatch(placeOrder(ingredients.map((el) => el._id)));
+  };
+  
 
   return (
     <section className={cn('pt-25', styles['constructor-section'])}>
@@ -75,6 +83,7 @@ const BurgerConstructor = () => {
           />
         }
         {!!orderError && <div className="mt-4">{orderError}</div>}
+        {!!noBun && <div className="mt-4">Пожалуйста, выберите булку</div>}
         {!!totalPrice &&
           <div className={cn('mt-4', styles.total)}>
             <div className={cn('text text_type_digits-medium mr-8', styles['total-price'])}>
@@ -83,7 +92,7 @@ const BurgerConstructor = () => {
                 <CurrencyIcon type="primary" />
               </span>
             </div>
-            <Button type="primary" size="large" onClick={toOrder}>
+            <Button type="primary" size="large" onClick={toOrder} disabled={noBun || orderRequest}>
               {
                 orderRequest ?
                 <BeatLoader loading={true} color='#ffffff' size={10}/> :

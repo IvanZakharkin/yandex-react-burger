@@ -6,13 +6,13 @@ import cn from 'classnames';
 import { useDrop, useDrag } from 'react-dnd';
 import { useDispatch } from 'react-redux';
 import dndTypes from '../../dnd-types';
-import { DELETE_ITEM, MOVE_ITEM } from '../../services/actions/builder';
+import { deleteConstructorItem, moveConstructorItem } from '../../services/actions/builder';
 
 const BurgerConstructorElement = (props) => {
   const { id, price, text, image, type, className, isLocked } = props;
   const dispatch = useDispatch();
-  const deleteElement = useCallback(() => dispatch({ type: DELETE_ITEM, id}), [dispatch, id]);
-  const moveElement = useCallback((id, toId) => dispatch({ type: MOVE_ITEM, id, toId}), [dispatch]);
+  const deleteElement = useCallback(() => dispatch(deleteConstructorItem(id)), [dispatch, id]);
+  const moveElement = useCallback((id, toId) => dispatch(moveConstructorItem(id, toId)), [dispatch]);
 
   const [{ isDragging }, drag, preview] = useDrag(() => ({
     type: dndTypes.CONSTRUCTOR_ITEM,

@@ -5,12 +5,12 @@ import BurgerIngredient from '../burger-ingredient/burger-ingredient';
 import { ingredientPropTypes } from '../../types';
 import cn from 'classnames';
 import { useDispatch } from 'react-redux';
-import { SET_DETAIL_INGREDIENT } from '../../services/actions/builder';
+import { setDetailIngredient } from '../../services/actions/builder';
 
 const BurgerIngredientsByType = React.forwardRef(({ type, ingredients, title }, ref) => {
   const listStyle = cn('pr-4 pl-4', styles.list);
   const dispatch = useDispatch();
-  const setIngredientDetail = useCallback(ingredient => dispatch({ type: SET_DETAIL_INGREDIENT, ingredient}), [dispatch]);
+  const setIngredientDetail = useCallback(ingredient => dispatch(setDetailIngredient(ingredient)), [dispatch]);
 
   if(ingredients.length === 0) {
     return null;

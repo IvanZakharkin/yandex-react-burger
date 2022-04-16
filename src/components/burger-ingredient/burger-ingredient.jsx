@@ -43,7 +43,7 @@ BurgerIngredient.defaultProps = {
 BurgerIngredient.propTypes = {
   image: PropTypes.string,
   price: PropTypes.number,
-  id: PropTypes.number,
+  id: PropTypes.string,
   title: PropTypes.string,
   onClick: PropTypes.func
 };

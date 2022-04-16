@@ -8,7 +8,7 @@ import styles from './app.module.css';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 import { DndProvider } from 'react-dnd';
 import { useSelector, useDispatch } from 'react-redux';
-import { DELETE_DETAIL_INGREDIENT, RESET_ORDER } from '../../services/actions/builder';
+import { deleteDetailIngredient, resetOrder } from '../../services/actions/builder';
 
 const App = () => {
   const { order, detailIngredient } = useSelector(state => ({
@@ -18,7 +18,7 @@ const App = () => {
 
   const dispatch = useDispatch();
 
-  const onCloseModal = () => dispatch({ type: DELETE_DETAIL_INGREDIENT});
+  const onCloseModal = () => dispatch(deleteDetailIngredient());
 
   return (
     <div className={styles.app}>
@@ -35,18 +35,13 @@ const App = () => {
                   onClose={onCloseModal}
                   title="Детали ингридиента"
                 >
-                  <IngredientDetails 
-                    name={detailIngredient.name}
-                    calories={detailIngredient.calories}
-                    proteins={detailIngredient.proteins}
-                    fat={detailIngredient.fat}
-                    carbohydrates={detailIngredient.carbohydrates}
-                    image={detailIngredient.image_large}
+                  <IngredientDetails
+                    detailIngredient={detailIngredient}
                   />
                 </Modal>
               }
               {order &&
-                <Modal onClose={() => dispatch({ type: RESET_ORDER })}>
+                <Modal onClose={() => dispatch(resetOrder())}>
                   <OrderDetails id={order.number} />
                 </Modal>
               }

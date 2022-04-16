@@ -1,4 +1,5 @@
 import { getIngredientsListRequest, placeOrderRequest } from '../../api';
+import { v4 as uuidv4 } from 'uuid';
 
 export const GET_INGREDIENTS_LIST_REQUEST = 'GET_INGREDIENTS_LIST';
 export const GET_INGREDIENTS_LIST_SUCCESS = 'GET_INGREDIENTS_LIST_SUCCESS';
@@ -40,7 +41,6 @@ export function getIngredientsList() {
 }
 
 export function placeOrder(ingredients) {
-  console.log(ingredients);
   return function(dispatch) {
     dispatch({
       type: PLACE_ORDER_REQUEST
@@ -60,4 +60,28 @@ export function placeOrder(ingredients) {
         });
       })
   };
+}
+
+export function setDetailIngredient(ingredient) {
+  return { type: SET_DETAIL_INGREDIENT, payload: { ingredient } };
+}
+
+export function deleteDetailIngredient() {
+  return { type: DELETE_DETAIL_INGREDIENT };
+}
+
+export function resetOrder() {
+  return { type: RESET_ORDER };
+}
+
+export function addConstructorItem(ingredientId) {
+  return { type: ADD_ITEM, payload: { ingredientId, itemId: uuidv4() } };
+}
+
+export function deleteConstructorItem(id) {
+  return { type: DELETE_ITEM, payload: { id } };
+}
+
+export function moveConstructorItem(id, toId) {
+  return { type: MOVE_ITEM, payload: { id, toId } };
 }
