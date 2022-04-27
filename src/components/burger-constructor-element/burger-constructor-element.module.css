@@ -1,0 +1,24 @@
+.ingredient {
+  display: flex;
+  align-items: center;
+}
+
+.constructor-element {
+  flex: 1;
+  display: flex;
+}
+
+.constructor-element--dragging {
+  opacity: 0;
+}
+
+.constructor-element > div  {
+  max-width: none;
+}
+
+.drag-button {
+  background: none;
+  border: none;
+  width: 32px;
+  flex-shrink: 0;
+}

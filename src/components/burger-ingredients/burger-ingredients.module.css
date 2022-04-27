@@ -8,9 +8,18 @@
 .ingredients-list {
   flex: 1;
   overflow: auto;
+  position: relative;
 }
 
 .tabs {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
+}
+
+.loader {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }

@@ -1,69 +1,51 @@
-import React from 'react';
 import AppHeader from '../app-header/app-header'
 import BurgerIngredients from '../burger-ingredients/burger-ingredients';
 import BurgerConstructor from '../burger-constructor/burger-constructor';
 import Modal from '../modal/modal';
 import IngredientDetails from '../ingredient-details/ingredient-details'
+import OrderDetails from '../order-details/order-details'
 import styles from './app.module.css';
-import { getIngredientsList as apiGetIngredientsList } from '../../api';
+import { HTML5Backend } from 'react-dnd-html5-backend';
+import { DndProvider } from 'react-dnd';
+import { useSelector, useDispatch } from 'react-redux';
+import { deleteDetailIngredient, resetOrder } from '../../services/actions/builder';
 
 const App = () => {
-  const [ ingredientsList, setIngredientsList ] = React.useState([]); 
-  const [ constructorIngedients, setConstructorIngedients ] = React.useState([]);
-  const [ loading, setLoading ] = React.useState(false);
-  const [ error, setError ] = React.useState();
-  const [ selectedIngredient, setSelectedIngredient] = React.useState();
+  const { order, detailIngredient } = useSelector(state => ({
+    order: state.builder.order,
+    detailIngredient: state.builder.detailIngredient,
+  }));
 
-  const onCloseModal = () => setSelectedIngredient(null);
+  const dispatch = useDispatch();
 
-  const getIngredientsList = async () => {
-    setLoading(true);
-
-    return apiGetIngredientsList()
-      .then((ingredients) => {
-        setIngredientsList(ingredients);
-        setConstructorIngedients([...ingredients].splice(0, 7));
-        setLoading(false);
-      })
-      .catch((err) => {
-        setError(err.message);
-        setLoading(false);
-      })    
-  };
-
-  React.useEffect(() => {
-    getIngredientsList();
-  }, [])
+  const onCloseModal = () => dispatch(deleteDetailIngredient());
 
   return (
     <div className={styles.app}>
       <AppHeader />
       {
-        !loading && 
         <main className={styles.main}>
-          {
-            !error ? 
-            (<div className={styles['constructor-page']}>
-              <BurgerIngredients ingredients={ingredientsList} onShowIngredientDetail={setSelectedIngredient}/>
-              <BurgerConstructor ingredients={constructorIngedients}></BurgerConstructor>
-              {selectedIngredient && 
+          <div className={styles['constructor-page']}>
+              <DndProvider backend={HTML5Backend}>
+                <BurgerIngredients />
+                <BurgerConstructor />
+              </DndProvider>
+              {detailIngredient && 
                 <Modal 
                   onClose={onCloseModal}
                   title="Детали ингридиента"
                 >
-                  <IngredientDetails 
-                    name={selectedIngredient.name}
-                    calories={selectedIngredient.calories}
-                    proteins={selectedIngredient.proteins}
-                    fat={selectedIngredient.fat}
-                    carbohydrates={selectedIngredient.carbohydrates}
-                    image={selectedIngredient.image_large}
+                  <IngredientDetails
+                    detailIngredient={detailIngredient}
                   />
                 </Modal>
               }
-            </div>) :
-            <div>{error}</div>
-          }
+              {order &&
+                <Modal onClose={() => dispatch(resetOrder())}>
+                  <OrderDetails id={order.number} />
+                </Modal>
+              }
+            </div>
         </main>
       }
     </div>
