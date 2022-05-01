@@ -4,10 +4,13 @@ import { Counter, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-c
 import cn from 'classnames';
 import { useDrag } from 'react-dnd';
 import { useSelector } from 'react-redux';
+import { useHistory, useLocation, Link } from 'react-router-dom';
 import dndTypes from '../../dnd-types';
 
 const BurgerIngredient = (props) => {
-  const { image, price, title, onClick, id } = props;
+  const { image, price, title, id } = props;
+  const history = useHistory();
+  const location = useLocation();
 
   const items = useSelector(state => state.builder.items);
   const count = items.filter(item => item._id === id).length;
@@ -20,7 +23,10 @@ const BurgerIngredient = (props) => {
   })
 
   return (
-    <div className={styles.ingredient} onClick={onClick} ref={ref}>
+    <Link className={styles.ingredient} to={{
+      pathname: `/ingredients/${id}`,
+      state: { background: location },
+    }} ref={ref}>
       {!!count &&
         <div className={styles.counter}>
           <Counter count={count} size="default" />
@@ -32,7 +38,7 @@ const BurgerIngredient = (props) => {
         <CurrencyIcon type="primary" />
       </div>
       <div className={styles.title}>{title}</div>
-    </div>
+    </Link>
   )
 };
 

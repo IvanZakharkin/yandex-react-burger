@@ -1,55 +1,35 @@
-import AppHeader from '../app-header/app-header'
-import BurgerIngredients from '../burger-ingredients/burger-ingredients';
-import BurgerConstructor from '../burger-constructor/burger-constructor';
-import Modal from '../modal/modal';
-import IngredientDetails from '../ingredient-details/ingredient-details'
-import OrderDetails from '../order-details/order-details'
+import { BrowserRouter as Router } from 'react-router-dom';
+import ModalSwitch from '../modal-switch/modal-switch';
 import styles from './app.module.css';
-import { HTML5Backend } from 'react-dnd-html5-backend';
-import { DndProvider } from 'react-dnd';
-import { useSelector, useDispatch } from 'react-redux';
-import { deleteDetailIngredient, resetOrder } from '../../services/actions/builder';
+import { useDispatch } from 'react-redux';
+import { useState, useEffect } from 'react';
+import { getUser } from '../../services/actions/auth'
+import AppHeader from '../app-header/app-header';
 
 const App = () => {
-  const { order, detailIngredient } = useSelector(state => ({
-    order: state.builder.order,
-    detailIngredient: state.builder.detailIngredient,
-  }));
-
+  const [isUserLoaded, setIsUserLoaded] = useState(false);
   const dispatch = useDispatch();
 
-  const onCloseModal = () => dispatch(deleteDetailIngredient());
+  useEffect(() => {
+    dispatch(getUser())
+      .catch((err) => (console.log(err)))
+      .finally(() => setIsUserLoaded(true))
+  }, [dispatch])
 
   return (
     <div className={styles.app}>
-      <AppHeader />
       {
         <main className={styles.main}>
-          <div className={styles['constructor-page']}>
-              <DndProvider backend={HTML5Backend}>
-                <BurgerIngredients />
-                <BurgerConstructor />
-              </DndProvider>
-              {detailIngredient && 
-                <Modal 
-                  onClose={onCloseModal}
-                  title="Детали ингридиента"
-                >
-                  <IngredientDetails
-                    detailIngredient={detailIngredient}
-                  />
-                </Modal>
-              }
-              {order &&
-                <Modal onClose={() => dispatch(resetOrder())}>
-                  <OrderDetails id={order.number} />
-                </Modal>
-              }
-            </div>
+          {isUserLoaded &&
+            <Router>
+              <AppHeader/>
+              <ModalSwitch></ModalSwitch>
+            </Router>
+          }
         </main>
       }
     </div>
-  )
-}
+  );
+};
 
-export default App; 
+export default App;

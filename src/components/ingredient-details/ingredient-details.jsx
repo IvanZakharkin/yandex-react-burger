@@ -2,9 +2,12 @@
 
 import styles from './ingredient-details.module.css';
 import cn from 'classnames';
-import { ingredientPropTypes } from '../../types';
+import { useParams } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 
-const IngredientDetails = ( {detailIngredient}) => {
+const IngredientDetails = () => {
+  const { ingredientId } = useParams();
+  const detailIngredient = useSelector(state => state.builder.ingredientsList.find((item) => item._id === ingredientId));
   const { name, image } = detailIngredient;
 
   const nutritionalValueTitles = {
@@ -31,9 +34,5 @@ const IngredientDetails = ( {detailIngredient}) => {
       </ul>
   </div>);
 } 
-
-IngredientDetails.propTypes = {
-  detailIngredient: ingredientPropTypes,
-};
 
 export default IngredientDetails;

@@ -8,11 +8,15 @@ import { useDispatch, useSelector } from 'react-redux';
 import dndTypes from '../../dnd-types';
 import { addConstructorItem, placeOrder } from '../../services/actions/builder';
 import BeatLoader from "react-spinners/BeatLoader";
+import { useHistory } from 'react-router-dom';
 
 const BurgerConstructor = () => {
   const ingredients = useSelector(state => state.builder.items);
   const orderRequest = useSelector(state => state.builder.orderRequest);
   const orderError = useSelector(state => state.builder.orderError);
+  const user = useSelector(state => state.auth.user);
+
+  const history = useHistory();
 
   const bun = ingredients.find((ingredient) => ingredient.type === 'bun');
   const otherIngredients = ingredients.filter((ingredient) => ingredient.type !== 'bun');
@@ -32,6 +36,13 @@ const BurgerConstructor = () => {
 
   const noBun = ingredients.length && !bun;
   const toOrder = () => {
+    if(!user) {
+      history.replace({
+        pathname: '/login'
+      })
+      return;
+    }
+
     if(noBun || orderRequest) {
       return;
     }
