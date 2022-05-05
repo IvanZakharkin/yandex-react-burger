@@ -4,12 +4,11 @@ import { Counter, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-c
 import cn from 'classnames';
 import { useDrag } from 'react-dnd';
 import { useSelector } from 'react-redux';
-import { useHistory, useLocation, Link } from 'react-router-dom';
+import { useLocation, Link } from 'react-router-dom';
 import dndTypes from '../../dnd-types';
 
 const BurgerIngredient = (props) => {
   const { image, price, title, id } = props;
-  const history = useHistory();
   const location = useLocation();
 
   const items = useSelector(state => state.builder.items);

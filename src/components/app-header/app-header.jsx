@@ -1,5 +1,4 @@
-import React from "react";
-import { NavLink, Link, useHistory, useLocation, useRouteMatch } from "react-router-dom";
+import { NavLink, Link } from "react-router-dom";
 import { BurgerIcon, ListIcon, ProfileIcon, Logo } from '@ya.praktikum/react-developer-burger-ui-components';
 import cn from 'classnames';
 import styles from './app-header.module.css';

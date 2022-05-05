@@ -12,6 +12,12 @@
   color: var(--text-primary-color);
 }
 
+.logout {
+  border: none;
+  background: none;
+}
+
 .logout:hover {
   cursor: pointer;
+  text-decoration: underline;
 }

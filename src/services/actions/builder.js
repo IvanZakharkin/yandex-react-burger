@@ -18,7 +18,11 @@ export const SET_DETAIL_INGREDIENT = 'SET_DETAIL_INGREDIENT';
 export const DELETE_DETAIL_INGREDIENT = 'DELETE_DETAIL_INGREDIENT';
 
 export function getIngredientsList() {
-  return function(dispatch) {
+  return function(dispatch, getState) {
+    if(getState().builder.items.length > 0) {
+      return;
+    };
+
     dispatch({
       type: GET_INGREDIENTS_LIST_REQUEST
     });

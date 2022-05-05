@@ -1,5 +1,3 @@
-
-import Cookie from './utils/cookie';
 import Token from './token';
 
 const BASE_URL = 'https://norma.nomoreparties.space/api/';

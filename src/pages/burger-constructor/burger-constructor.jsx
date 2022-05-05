@@ -23,7 +23,7 @@ const ConstructorPage = () => {
   const onCloseModal = () => dispatch(deleteDetailIngredient());
 
   return (
-    <>
+    <div className="page">
       <div className={styles['constructor-page']}>
         <DndProvider backend={HTML5Backend}>
           <BurgerIngredients />
@@ -40,7 +40,7 @@ const ConstructorPage = () => {
           </Modal>
         )}
       </div>
-    </>
+    </div>
   );
 };
 

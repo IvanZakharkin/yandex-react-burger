@@ -1,4 +1,4 @@
-export default {
+const Cookie = {
 	get(name) {
 		const matches = document.cookie.match(
 			new RegExp(
@@ -37,3 +37,5 @@ export default {
 		this.set(name, null, { expires: -1 });
 	},
 };
+
+export default Cookie;

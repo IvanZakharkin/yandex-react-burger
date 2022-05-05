@@ -84,8 +84,8 @@ export default function ModalSwitch() {
         <Route
           path='/ingredients/:ingredientId'
         >
-          <Modal onClose={handleModalClose}>
-            <IngredientDetails />
+          <Modal onClose={handleModalClose} title="Детали ингредиента">
+            <IngredientDetails notShowTitle={true}/>
           </Modal>
         </Route>
       )}

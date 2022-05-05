@@ -36,9 +36,9 @@ a:hover {
 }
 
 .page {
-  height: 100%;
   width: 100%;
-  overflow: auto;
+  flex: 1 1 auto;
+  height: calc(100vh - 88px);
 }
 
 .page--center {
@@ -70,4 +70,3 @@ a:hover {
 .form-input .input__container {
   width: 100%;
 }
-

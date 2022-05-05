@@ -1,6 +1,4 @@
-import { useSelector } from 'react-redux';
-import { Redirect, Route, NavLink } from 'react-router-dom';
-import { useEffect, useState } from 'react';
+import { NavLink } from 'react-router-dom';
 import styles from './profile-menu.module.css';
 import cn from 'classnames';
 import { useDispatch } from 'react-redux';
@@ -32,7 +30,7 @@ export default function ProfileMenu() {
         >История заказов</NavLink>
       </li>
       <li className={styles.item}>
-        <a className={cn('text', styles.link, styles.logout)} onClick={onLogout}>Выход</a>
+        <button type="button" className={cn('text', styles.link, styles.logout)} onClick={onLogout}>Выход</button>
       </li>
     </ul>
   );
