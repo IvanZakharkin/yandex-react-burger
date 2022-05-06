@@ -1,11 +1,11 @@
 ::-webkit-scrollbar {
   width: 8px;
-  background: #2F2F37;
+  background: #2f2f37;
 }
 
 ::-webkit-scrollbar-thumb {
   background: #8585ad;
-  border: 3px solid #8585AD;;
+  border: 3px solid #8585ad;
 }
 
 * {
@@ -54,7 +54,6 @@ a:hover {
   width: 480px;
   text-align: center;
 }
-
 
 .form-page .input {
   width: 100%;

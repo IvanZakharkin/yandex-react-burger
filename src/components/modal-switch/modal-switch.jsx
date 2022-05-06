@@ -30,49 +30,28 @@ export default function ModalSwitch() {
         <Route path="/login" exact={true}>
           <LoginPage />
         </Route>
-        <Route
-          path="/register"
-          exact={true}
-        >
+        <Route path="/register" exact={true}>
           <RegisterPage />
         </Route>
-        <Route
-          path="/forgot-password"
-          exact={true}
-        >
+        <Route path="/forgot-password" exact={true}>
           <ForgotPasswordPage />
         </Route>
-        <Route
-          path="/reset-password"
-          exact={true}
-        >
+        <Route path="/reset-password" exact={true}>
           <ResetPasswordPage />
         </Route>
-        <Route
-          path='/ingredients/:ingredientId'
-          exact={true}
-        >
+        <Route path="/ingredients/:ingredientId" exact={true}>
           <IngredientsPage />
         </Route>
         <Route path="/" exact={true}>
           <ConstructorPage />
         </Route>
-        <ProtectedRoute
-          path={`/profile`}
-          exact={true}
-        >
+        <ProtectedRoute path={`/profile`} exact={true}>
           <ProfilePage />
         </ProtectedRoute>
-        <ProtectedRoute
-          path={`/profile/orders`}
-          exact={true}
-        >
+        <ProtectedRoute path={`/profile/orders`} exact={true}>
           <HistoryOrdersPage />
         </ProtectedRoute>
-        <ProtectedRoute
-          path={`/orders`}
-          exact={true}
-        >
+        <ProtectedRoute path={`/orders`} exact={true}>
           <OrdersPage />
         </ProtectedRoute>
         <Route>
@@ -81,15 +60,12 @@ export default function ModalSwitch() {
       </Switch>
 
       {background && (
-        <Route
-          path='/ingredients/:ingredientId'
-        >
+        <Route path="/ingredients/:ingredientId">
           <Modal onClose={handleModalClose} title="Детали ингредиента">
-            <IngredientDetails notShowTitle={true}/>
+            <IngredientDetails notShowTitle={true} />
           </Modal>
         </Route>
       )}
-
-
-    </>);
-};
+    </>
+  );
+}

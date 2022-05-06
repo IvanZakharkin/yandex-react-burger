@@ -1,10 +1,9 @@
-
 import { useState } from 'react';
 import { Input } from '@ya.praktikum/react-developer-burger-ui-components';
 
-export default function PasswordInput({type, ...props }) {
-  const [ isShowed, setIsShowed ] = useState(false);
-	return (
+export default function PasswordInput({ type, ...props }) {
+  const [isShowed, setIsShowed] = useState(false);
+  return (
     <div className="mb-6">
       <Input
         {...props}
@@ -13,5 +12,5 @@ export default function PasswordInput({type, ...props }) {
         onIconClick={() => setIsShowed(!isShowed)}
       />
     </div>
-	);
+  );
 }

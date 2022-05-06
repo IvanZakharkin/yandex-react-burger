@@ -1,7 +1,7 @@
-import Form from '../../components/form/form'
+import Form from '../../components/form/form';
 import { useSelector, useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { useHistory, Redirect } from "react-router-dom";
+import { useHistory, Redirect } from 'react-router-dom';
 import { forgotPassword } from '../../services/actions/auth';
 import { useEffect } from 'react';
 import { clearError } from '../../services/actions/auth';
@@ -10,33 +10,32 @@ const fields = [
   {
     type: 'email',
     placeholder: 'Укажите e-mail',
-    name: 'email',
+    name: 'email'
   }
 ];
 
 export default function ForgotPasswordPage() {
-  const request = useSelector(state => state.auth.request);
-  const error = useSelector(state => state.auth.error);
-  const user = useSelector(state => state.auth.user);
+  const request = useSelector((state) => state.auth.request);
+  const error = useSelector((state) => state.auth.error);
+  const user = useSelector((state) => state.auth.user);
 
   const dispatch = useDispatch();
   const history = useHistory();
 
   const onSubmit = (formData) => {
-    dispatch(forgotPassword(formData))
-      .then(() => {
-        if(!error) {
-          history.replace({
-            pathname: '/reset-password',
-            from: '/forgot-password'
-          })
-        }
-      })
-  }
+    dispatch(forgotPassword(formData)).then(() => {
+      if (!error) {
+        history.replace({
+          pathname: '/reset-password',
+          from: '/forgot-password'
+        });
+      }
+    });
+  };
 
   useEffect(() => {
-    dispatch(clearError())
-  }, [dispatch])
+    dispatch(clearError());
+  }, [dispatch]);
 
   if (user) {
     return (

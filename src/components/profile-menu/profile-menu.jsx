@@ -9,28 +9,38 @@ export default function ProfileMenu() {
 
   const onLogout = () => {
     dispatch(logout());
-  }
+  };
 
   return (
     <ul className={styles.menu}>
       <li className={styles.item}>
-        <NavLink 
-          exact 
-          className={cn('text', styles.link)} 
+        <NavLink
+          exact
+          className={cn('text', styles.link)}
           to={{ pathname: `/profile` }}
           activeClassName={styles.active}
-        >Профиль</NavLink>
+        >
+          Профиль
+        </NavLink>
       </li>
       <li className={styles.item}>
-        <NavLink 
-          exact 
-          className={cn('text', styles.link)} 
+        <NavLink
+          exact
+          className={cn('text', styles.link)}
           to={{ pathname: `/profile/orders` }}
           activeClassName={styles.active}
-        >История заказов</NavLink>
+        >
+          История заказов
+        </NavLink>
       </li>
       <li className={styles.item}>
-        <button type="button" className={cn('text', styles.link, styles.logout)} onClick={onLogout}>Выход</button>
+        <button
+          type="button"
+          className={cn('text', styles.link, styles.logout)}
+          onClick={onLogout}
+        >
+          Выход
+        </button>
       </li>
     </ul>
   );

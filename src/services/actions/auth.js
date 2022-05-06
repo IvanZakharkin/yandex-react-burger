@@ -1,9 +1,9 @@
-import { 
-  registerRequest, 
-  authRequest, 
-  forgorPasswordRequest, 
-  resetPasswordRequest, 
-  getUserRequest, 
+import {
+  registerRequest,
+  authRequest,
+  forgorPasswordRequest,
+  resetPasswordRequest,
+  getUserRequest,
   updateUserRequest,
   logoutRequest
 } from '../../api';
@@ -32,7 +32,6 @@ export const UPDATE_USER = 'UPDATE_USER';
 
 export const CLEAR_ERROR = 'CLEAR_ERROR';
 
-
 export function register(form) {
   return function (dispatch) {
     dispatch({
@@ -53,7 +52,7 @@ export function register(form) {
           type: REGISTRATION_ERROR,
           error: err.message
         });
-      })
+      });
   };
 }
 
@@ -77,7 +76,7 @@ export function auth(form) {
           type: AUTH_ERROR,
           error: err.message
         });
-      })
+      });
   };
 }
 
@@ -90,7 +89,7 @@ export function forgotPassword(form) {
     return forgorPasswordRequest(form)
       .then(() => {
         dispatch({
-          type: FORGOT_PASSWORD_SUCCESS,
+          type: FORGOT_PASSWORD_SUCCESS
         });
 
         return true;
@@ -102,7 +101,7 @@ export function forgotPassword(form) {
         });
 
         return false;
-      })
+      });
   };
 }
 
@@ -115,7 +114,7 @@ export function resetPassword(form) {
     return resetPasswordRequest(form)
       .then(() => {
         dispatch({
-          type: RESET_PASSWORD_SUCCESS,
+          type: RESET_PASSWORD_SUCCESS
         });
 
         return true;
@@ -127,39 +126,37 @@ export function resetPassword(form) {
         });
 
         return false;
-      })
+      });
   };
 }
 
 export function getUser() {
   return function (dispatch) {
-    return getUserRequest()
-      .then((user) => {
-        dispatch({
-          type: UPDATE_USER,
-          payload: {
-            user
-          }
-        });
+    return getUserRequest().then((user) => {
+      dispatch({
+        type: UPDATE_USER,
+        payload: {
+          user
+        }
+      });
 
-        return true;
-      })
+      return true;
+    });
   };
 }
 
 export function updateUser(form) {
   return function (dispatch) {
-    return updateUserRequest(form)
-      .then((user) => {
-        dispatch({
-          type: UPDATE_USER,
-          payload: {
-            user
-          }
-        });
+    return updateUserRequest(form).then((user) => {
+      dispatch({
+        type: UPDATE_USER,
+        payload: {
+          user
+        }
+      });
 
-        return true;
-      })
+      return true;
+    });
   };
 }
 
@@ -172,7 +169,7 @@ export function logout() {
     return logoutRequest()
       .then(() => {
         dispatch({
-          type: LOG_OUT_SUCCESS,
+          type: LOG_OUT_SUCCESS
         });
 
         return true;
@@ -184,10 +181,10 @@ export function logout() {
         });
 
         return false;
-      })
+      });
   };
 }
 
 export function clearError() {
-  return { type: CLEAR_ERROR }
+  return { type: CLEAR_ERROR };
 }

@@ -1,5 +1,5 @@
 import styles from './history-orders.module.css';
-import ProfileMenu from '../../components/profile-menu/profile-menu'
+import ProfileMenu from '../../components/profile-menu/profile-menu';
 
 export default function ProfilePage() {
   return (
@@ -13,8 +13,7 @@ export default function ProfilePage() {
             В этом разделе вы можете изменить свои персональные данные
           </div>
         </div>
-        <div className={styles.main}>
-        </div>
+        <div className={styles.main}></div>
       </div>
     </>
   );

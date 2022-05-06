@@ -1,5 +1,5 @@
 import styles from './orders.module.css';
-import ProfileMenu from '../../components/profile-menu/profile-menu'
+import ProfileMenu from '../../components/profile-menu/profile-menu';
 
 export default function OrdersPage() {
   return (
@@ -7,8 +7,7 @@ export default function OrdersPage() {
       <div className={styles.menu}>
         <ProfileMenu></ProfileMenu>
       </div>
-      <div className={styles.main}>
-      </div>
+      <div className={styles.main}></div>
     </div>
   );
 }

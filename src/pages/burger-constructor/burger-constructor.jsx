@@ -9,13 +9,13 @@ import { DndProvider } from 'react-dnd';
 import { useSelector, useDispatch } from 'react-redux';
 import {
   deleteDetailIngredient,
-  resetOrder,
+  resetOrder
 } from '../../services/actions/builder';
 
 const ConstructorPage = () => {
   const { order, detailIngredient } = useSelector((state) => ({
     order: state.builder.order,
-    detailIngredient: state.builder.detailIngredient,
+    detailIngredient: state.builder.detailIngredient
   }));
 
   const dispatch = useDispatch();

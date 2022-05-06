@@ -1,6 +1,6 @@
 import styles from './profile.module.css';
-import ProfileMenu from '../../components/profile-menu/profile-menu'
-import ProfileForm from '../../components/profile-form/profile-form'
+import ProfileMenu from '../../components/profile-menu/profile-menu';
+import ProfileForm from '../../components/profile-form/profile-form';
 
 export default function ProfilePage() {
   return (

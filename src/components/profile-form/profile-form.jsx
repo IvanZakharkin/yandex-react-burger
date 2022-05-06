@@ -1,14 +1,17 @@
 import { useSelector, useDispatch } from 'react-redux';
 import { useState } from 'react';
-import { Input, Button } from '@ya.praktikum/react-developer-burger-ui-components';
-import BeatLoader from "react-spinners/BeatLoader";
+import {
+  Input,
+  Button
+} from '@ya.praktikum/react-developer-burger-ui-components';
+import BeatLoader from 'react-spinners/BeatLoader';
 import { updateUser } from '../../services/actions/auth';
 
 export default function ProfileForm() {
-  const user = useSelector(state => ({ ...state.auth.user, password: '' }));
+  const user = useSelector((state) => ({ ...state.auth.user, password: '' }));
   const dispatch = useDispatch();
 
-  const [form, setForm] = useState({...user, password: ''});
+  const [form, setForm] = useState({ ...user, password: '' });
   const [error, setError] = useState('');
   const [isSaving, setIsSaving] = useState(false);
 
@@ -16,7 +19,7 @@ export default function ProfileForm() {
     setForm({
       ...form,
       [event.target.name]: event.target.value
-    })
+    });
   };
 
   const onSubmit = (event) => {
@@ -29,14 +32,14 @@ export default function ProfileForm() {
         setForm({
           ...form,
           password: ''
-        })
+        });
       })
       .catch((err) => setError(err))
-      .finally(() => setIsSaving(false))
-  }
+      .finally(() => setIsSaving(false));
+  };
 
   const cancel = () => {
-    setForm({...user, password: ''})
+    setForm({ ...user, password: '' });
   };
 
   const wasChanged = Object.keys(form).some((key) => form[key] !== user[key]);
@@ -76,22 +79,21 @@ export default function ProfileForm() {
           disabled={isSaving}
         />
       </div>
-      {!!error && (<div className="mb-6">{error}</div>)}
-      {
-        wasChanged && (
-          <div className="mb-10">
-            <Button type="secondary" disabled={isSaving} onClick={cancel}>Отменить</Button>
-            <Button type="primary" disabled={isSaving}>
-              {
-                isSaving ?
-                  <BeatLoader loading={true} color='#ffffff' size={10} /> :
-                  'Сохранить'
-              }
-            </Button>
-          </div>
-        )
-      }
-
+      {!!error && <div className="mb-6">{error}</div>}
+      {wasChanged && (
+        <div className="mb-10">
+          <Button type="secondary" disabled={isSaving} onClick={cancel}>
+            Отменить
+          </Button>
+          <Button type="primary" disabled={isSaving}>
+            {isSaving ? (
+              <BeatLoader loading={true} color="#ffffff" size={10} />
+            ) : (
+              'Сохранить'
+            )}
+          </Button>
+        </div>
+      )}
     </form>
   );
 }

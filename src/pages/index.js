@@ -10,14 +10,14 @@ import OrdersPage from './orders/orders';
 import HistoryOrdersPage from './history-orders/history-orders';
 
 export {
-    ConstructorPage,
-    ForgotPasswordPage,
-    IngredientsPage,
-    LoginPage,
-    NotFoundPage,
-    ProfilePage,
-    RegisterPage,
-    ResetPasswordPage,
-    OrdersPage,
-    HistoryOrdersPage
+  ConstructorPage,
+  ForgotPasswordPage,
+  IngredientsPage,
+  LoginPage,
+  NotFoundPage,
+  ProfilePage,
+  RegisterPage,
+  ResetPasswordPage,
+  OrdersPage,
+  HistoryOrdersPage
 };

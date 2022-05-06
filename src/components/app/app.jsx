@@ -3,7 +3,7 @@ import ModalSwitch from '../modal-switch/modal-switch';
 import styles from './app.module.css';
 import { useDispatch } from 'react-redux';
 import { useState, useEffect } from 'react';
-import { getUser } from '../../services/actions/auth'
+import { getUser } from '../../services/actions/auth';
 import AppHeader from '../app-header/app-header';
 
 const App = () => {
@@ -12,20 +12,20 @@ const App = () => {
 
   useEffect(() => {
     dispatch(getUser())
-      .catch((err) => (console.log(err)))
-      .finally(() => setIsUserLoaded(true))
-  }, [dispatch])
+      .catch((err) => console.log(err))
+      .finally(() => setIsUserLoaded(true));
+  }, [dispatch]);
 
   return (
     <div className={styles.app}>
       {
         <main className={styles.main}>
-          {isUserLoaded &&
+          {isUserLoaded && (
             <Router>
-              <AppHeader/>
+              <AppHeader />
               <ModalSwitch></ModalSwitch>
             </Router>
-          }
+          )}
         </main>
       }
     </div>

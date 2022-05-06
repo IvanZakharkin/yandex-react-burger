@@ -12,7 +12,7 @@
   opacity: 0;
 }
 
-.constructor-element > div  {
+.constructor-element > div {
   max-width: none;
 }
 

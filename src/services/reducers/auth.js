@@ -15,13 +15,13 @@ import {
   RESET_PASSWORD_SUCCESS,
   RESET_PASSWORD_ERROR,
   UPDATE_USER,
-  CLEAR_ERROR,
+  CLEAR_ERROR
 } from '../actions/auth';
 
 const initialState = {
   user: null,
   request: false,
-  error: '',
+  error: ''
 };
 
 export const authReducer = (state = initialState, action) => {
@@ -31,7 +31,7 @@ export const authReducer = (state = initialState, action) => {
       return {
         ...state,
         request: true,
-        error: '',
+        error: ''
       };
     }
     case REGISTRATION_SUCCESS:
@@ -40,7 +40,7 @@ export const authReducer = (state = initialState, action) => {
         ...state,
         user: action.payload.user,
         request: false,
-        error: '',
+        error: ''
       };
     }
     case REGISTRATION_ERROR:
@@ -59,7 +59,7 @@ export const authReducer = (state = initialState, action) => {
       return {
         ...state,
         request: true,
-        error: '',
+        error: ''
       };
 
     case RESET_PASSWORD_SUCCESS:
@@ -67,14 +67,14 @@ export const authReducer = (state = initialState, action) => {
       return {
         ...state,
         request: false,
-        error: '',
+        error: ''
       };
     case LOG_OUT_SUCCESS:
       return {
         ...state,
         user: null,
         request: false,
-        error: '',
+        error: ''
       };
 
     case RESET_PASSWORD_ERROR:
@@ -83,24 +83,23 @@ export const authReducer = (state = initialState, action) => {
       return {
         ...state,
         request: false,
-        error: action.error,
+        error: action.error
       };
 
     case UPDATE_USER:
       return {
         ...state,
-        user: action.payload.user,
-      }
+        user: action.payload.user
+      };
 
     case CLEAR_ERROR:
       return {
         ...state,
-        error: '',
-      }
+        error: ''
+      };
 
     default: {
       return state;
     }
-
   }
 };

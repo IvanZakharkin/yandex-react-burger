@@ -18,10 +18,10 @@ export const SET_DETAIL_INGREDIENT = 'SET_DETAIL_INGREDIENT';
 export const DELETE_DETAIL_INGREDIENT = 'DELETE_DETAIL_INGREDIENT';
 
 export function getIngredientsList() {
-  return function(dispatch, getState) {
-    if(getState().builder.items.length > 0) {
+  return function (dispatch, getState) {
+    if (getState().builder.items.length > 0) {
       return;
-    };
+    }
 
     dispatch({
       type: GET_INGREDIENTS_LIST_REQUEST
@@ -40,12 +40,12 @@ export function getIngredientsList() {
           type: GET_INGREDIENTS_LIST_ERROR,
           error: err.message
         });
-      })
+      });
   };
 }
 
 export function placeOrder(ingredients) {
-  return function(dispatch) {
+  return function (dispatch) {
     dispatch({
       type: PLACE_ORDER_REQUEST
     });
@@ -62,7 +62,7 @@ export function placeOrder(ingredients) {
           type: PLACE_ORDER_ERROR,
           error: err.message
         });
-      })
+      });
   };
 }
 
