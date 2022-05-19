@@ -7,33 +7,38 @@ import cn from 'classnames';
 import { useDispatch } from 'react-redux';
 import { setDetailIngredient } from '../../services/actions/builder';
 
-const BurgerIngredientsByType = React.forwardRef(({ type, ingredients, title }, ref) => {
-  const listStyle = cn('pr-4 pl-4', styles.list);
-  const dispatch = useDispatch();
-  const setIngredientDetail = useCallback(ingredient => dispatch(setDetailIngredient(ingredient)), [dispatch]);
+const BurgerIngredientsByType = React.forwardRef(
+  ({ type, ingredients, title }, ref) => {
+    const listStyle = cn('pr-4 pl-4', styles.list);
+    const dispatch = useDispatch();
+    const setIngredientDetail = useCallback(
+      (ingredient) => dispatch(setDetailIngredient(ingredient)),
+      [dispatch]
+    );
 
-  if(ingredients.length === 0) {
-    return null;
+    if (ingredients.length === 0) {
+      return null;
+    }
+
+    return (
+      <div className="mb-10" data-type={type} ref={ref}>
+        <div className="text text_type_main-medium mb-8">{title}</div>
+        <ul className={listStyle}>
+          {ingredients.map((ingredient) => (
+            <BurgerIngredient
+              key={ingredient._id}
+              image={ingredient.image}
+              price={ingredient.price}
+              title={ingredient.name}
+              id={ingredient._id}
+              onClick={() => setIngredientDetail(ingredient)}
+            />
+          ))}
+        </ul>
+      </div>
+    );
   }
-
-  return (
-    <div className='mb-10' data-type={type} ref={ref}>
-      <div className='text text_type_main-medium mb-8'>{title}</div>
-      <ul className={listStyle}>
-        {ingredients.map((ingredient) => (
-          <BurgerIngredient
-            key={ingredient._id}
-            image={ingredient.image}
-            price={ingredient.price}
-            title={ingredient.name}
-            id={ingredient._id}
-            onClick={() => setIngredientDetail(ingredient)}
-          />
-        ))}
-      </ul>
-    </div>
-  )
-});
+);
 
 BurgerIngredientsByType.propTypes = {
   title: PropTypes.string.isRequired,

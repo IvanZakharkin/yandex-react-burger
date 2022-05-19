@@ -30,11 +30,19 @@
   align-items: center;
   text-decoration: none;
   gap: 9px;
-  color: inherit;
+  color: var(--text-inactive-color);
 }
 
 .link-icon {
   line-height: 0;
+}
+
+.link-active {
+  color: var(--text-primary-color);
+}
+
+.link-active svg {
+  fill: var(--text-primary-color);
 }
 
 .menu-item-logo {

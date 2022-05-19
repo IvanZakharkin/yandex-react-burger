@@ -10,7 +10,7 @@ import {
   MOVE_ITEM,
   SET_DETAIL_INGREDIENT,
   DELETE_DETAIL_INGREDIENT,
-  RESET_ORDER,
+  RESET_ORDER
 } from '../actions/builder';
 
 const initialState = {
@@ -24,7 +24,7 @@ const initialState = {
 
   ingredientsList: [],
   ingredientsListRequest: false,
-  ingredientsListError: '',
+  ingredientsListError: ''
 };
 
 export const builderReducer = (state = initialState, action) => {
@@ -33,7 +33,7 @@ export const builderReducer = (state = initialState, action) => {
       return {
         ...state,
         ingredientsListRequest: true,
-        ingredientsListError: '',
+        ingredientsListError: ''
       };
     }
     case GET_INGREDIENTS_LIST_SUCCESS: {
@@ -41,7 +41,7 @@ export const builderReducer = (state = initialState, action) => {
         ...state,
         ingredientsList: action.ingredients,
         ingredientsListRequest: false,
-        ingredientsListError: '',
+        ingredientsListError: ''
       };
     }
     case GET_INGREDIENTS_LIST_ERROR: {
@@ -56,14 +56,14 @@ export const builderReducer = (state = initialState, action) => {
       return {
         ...state,
         order: null,
-        items: [],
+        items: []
       };
     }
     case PLACE_ORDER_REQUEST: {
       return {
         ...state,
         orderRequest: true,
-        orderError: '',
+        orderError: ''
       };
     }
     case PLACE_ORDER_SUCCESS: {
@@ -71,7 +71,7 @@ export const builderReducer = (state = initialState, action) => {
         ...state,
         order: action.order,
         orderRequest: false,
-        orderError: '',
+        orderError: ''
       };
     }
     case PLACE_ORDER_ERROR: {
@@ -84,15 +84,18 @@ export const builderReducer = (state = initialState, action) => {
     }
     case ADD_ITEM: {
       const { ingredientId, itemId } = action.payload;
-      const newItem = {...state.ingredientsList.find((item) => item._id === ingredientId), id: itemId };
-      const newItems = newItem.type === 'bun' ? state.items.filter((item) => item.type !== 'bun') : state.items;
+      const newItem = {
+        ...state.ingredientsList.find((item) => item._id === ingredientId),
+        id: itemId
+      };
+      const newItems =
+        newItem.type === 'bun'
+          ? state.items.filter((item) => item.type !== 'bun')
+          : state.items;
 
       return {
         ...state,
-        items: [ 
-          ...newItems, 
-          newItem 
-        ]
+        items: [...newItems, newItem]
       };
     }
     case DELETE_ITEM: {
@@ -102,8 +105,12 @@ export const builderReducer = (state = initialState, action) => {
       };
     }
     case MOVE_ITEM: {
-      const itemIndex = state.items.findIndex((item) => item.id === action.payload.id);
-      const toItemIndex = state.items.findIndex((item) => item.id === action.payload.toId);
+      const itemIndex = state.items.findIndex(
+        (item) => item.id === action.payload.id
+      );
+      const toItemIndex = state.items.findIndex(
+        (item) => item.id === action.payload.toId
+      );
       const item = state.items[itemIndex];
       const newItems = [...state.items];
       newItems.splice(itemIndex, 1);
@@ -128,6 +135,5 @@ export const builderReducer = (state = initialState, action) => {
     default: {
       return state;
     }
-    
   }
 };

@@ -5,7 +5,7 @@ import cn from 'classnames';
 import BurgerIngredientsByType from '../burger-ingredients-by-type/burger-ingredients-by-type';
 import styles from './burger-ingredients.module.css';
 import { getIngredientsList } from '../../services/actions/builder';
-import RingLoader from "react-spinners/RingLoader";
+import RingLoader from 'react-spinners/RingLoader';
 
 const TAB_LIST = {
   bun: 'Булки',
@@ -14,23 +14,30 @@ const TAB_LIST = {
 };
 
 const BurgerIngredients = () => {
-  const ingredients = useSelector(state => state.builder.ingredientsList);
-  const ingredientsListRequest = useSelector(state => state.builder.ingredientsListRequest);
-  const ingredientsListError = useSelector(state => state.builder.ingredientsListError);
+  const ingredients = useSelector((state) => state.builder.ingredientsList);
+  const ingredientsListRequest = useSelector(
+    (state) => state.builder.ingredientsListRequest
+  );
+  const ingredientsListError = useSelector(
+    (state) => state.builder.ingredientsListError
+  );
   const dispatch = useDispatch();
 
-  const ingredientsByTypes = useMemo(() => ({
-    sauce: ingredients.filter((ingredient) => ingredient.type === 'sauce'),
-    main: ingredients.filter((ingredient) => ingredient.type === 'main'),
-    bun: ingredients.filter((ingredient) => ingredient.type === 'bun'),
-  }), [ingredients]);
+  const ingredientsByTypes = useMemo(
+    () => ({
+      sauce: ingredients.filter((ingredient) => ingredient.type === 'sauce'),
+      main: ingredients.filter((ingredient) => ingredient.type === 'main'),
+      bun: ingredients.filter((ingredient) => ingredient.type === 'bun')
+    }),
+    [ingredients]
+  );
 
   const types = Object.keys(TAB_LIST);
   const listRef = useRef(null);
   const blockTypeRefs = {
     bun: useRef(null),
     main: useRef(null),
-    sauce: useRef(null),
+    sauce: useRef(null)
   };
 
   const [activeTab, setActiveTab] = useState(types[0]);
@@ -44,9 +51,9 @@ const BurgerIngredients = () => {
 
     const index = typeBloksBottomCoordinates.findIndex((b) => scrollTop <= b);
 
-    for(let i = 0; i < types.length; i += 1) {
+    for (let i = 0; i < types.length; i += 1) {
       const type = types[i];
-      if(type !== activeTab && i === index) {
+      if (type !== activeTab && i === index) {
         setActiveTab(type);
         break;
       }
@@ -55,33 +62,43 @@ const BurgerIngredients = () => {
 
   const handlerTabClick = (tab) => {
     const typeNode = blockTypeRefs[tab].current;
-    if(typeNode) {
+    if (typeNode) {
       listRef.current.scrollTop = typeNode.offsetTop;
     }
   };
 
   useEffect(() => {
     dispatch(getIngredientsList());
-  }, [dispatch])
+  }, [dispatch]);
 
   return (
     <section className={styles['ingredients-section']}>
       <h2 className="pt-10 pb-5 text text_type_main-large">Соберите бургер</h2>
-      {
-        ingredientsListError ? ingredientsListError :
-        ingredientsListRequest ? (<div className={styles.loader}><RingLoader size={150} color="#4c4cff" loading={true}/></div>) :
-        (<>
+      {ingredientsListError ? (
+        ingredientsListError
+      ) : ingredientsListRequest ? (
+        <div className={styles.loader}>
+          <RingLoader size={150} color="#4c4cff" loading={true} />
+        </div>
+      ) : (
+        <>
           <div className={cn('mb-10', styles.tabs)}>
             {types.map((type) => (
-              <Tab 
-                value={type} 
+              <Tab
+                value={type}
                 key={type}
                 active={type === activeTab}
                 onClick={handlerTabClick}
-              >{TAB_LIST[type]}</Tab>
+              >
+                {TAB_LIST[type]}
+              </Tab>
             ))}
           </div>
-          <div className={styles['ingredients-list']} ref={listRef} onScroll={handlerScroll}>
+          <div
+            className={styles['ingredients-list']}
+            ref={listRef}
+            onScroll={handlerScroll}
+          >
             {types.map((type) => (
               <BurgerIngredientsByType
                 ref={blockTypeRefs[type]}
@@ -92,10 +109,10 @@ const BurgerIngredients = () => {
               />
             ))}
           </div>
-        </>)
-      }
+        </>
+      )}
     </section>
-  )
-}
+  );
+};
 
-export default BurgerIngredients; 
+export default BurgerIngredients;

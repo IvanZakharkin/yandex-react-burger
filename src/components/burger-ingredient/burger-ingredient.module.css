@@ -1,10 +1,12 @@
 .ingredient {
   text-align: center;
   position: relative;
+  color: var(--text-primary-color);
 }
 
 .ingredient:hover {
   cursor: pointer;
+  text-decoration: none;
 }
 
 .price {

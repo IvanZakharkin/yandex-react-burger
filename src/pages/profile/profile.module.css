@@ -1,0 +1,17 @@
+.page {
+  display: flex;
+  gap: 60px;
+  padding-top: 120px;
+}
+
+.sidebar {
+  width: 320px;
+}
+
+.main {
+  flex: 1;
+}
+
+.form {
+  width: 480px;
+}
