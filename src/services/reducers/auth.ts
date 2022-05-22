@@ -17,14 +17,21 @@ import {
   UPDATE_USER,
   CLEAR_ERROR
 } from '../actions/auth';
+import { TUser } from '../../types'
 
-const initialState = {
+type TAuthState = {
+  user: TUser | null,
+  request: boolean;
+  error: string;
+};
+
+const initialState:TAuthState = {
   user: null,
   request: false,
   error: ''
 };
 
-export const authReducer = (state = initialState, action) => {
+export const authReducer = (state = initialState, action: { type: any; payload: { user: any; }; error: any; }) => {
   switch (action.type) {
     case REGISTRATION_REQUEST:
     case AUTH_REQUEST: {

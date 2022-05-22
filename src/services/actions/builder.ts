@@ -1,5 +1,6 @@
 import { getIngredientsListRequest, placeOrderRequest } from '../../api';
 import { v4 as uuidv4 } from 'uuid';
+import { TIngredient, TСonstructorIngredient } from '../../types';
 
 export const GET_INGREDIENTS_LIST_REQUEST = 'GET_INGREDIENTS_LIST';
 export const GET_INGREDIENTS_LIST_SUCCESS = 'GET_INGREDIENTS_LIST_SUCCESS';
@@ -18,7 +19,7 @@ export const SET_DETAIL_INGREDIENT = 'SET_DETAIL_INGREDIENT';
 export const DELETE_DETAIL_INGREDIENT = 'DELETE_DETAIL_INGREDIENT';
 
 export function getIngredientsList() {
-  return function (dispatch, getState) {
+  return function (dispatch: (arg0: { type: string; ingredients?: TIngredient[]; error?: any; }) => void, getState: () => { (): any; new(): any; builder: { (): any; new(): any; items: { (): any; new(): any; length: number; }; }; }) {
     if (getState().builder.items.length > 0) {
       return;
     }
@@ -44,8 +45,8 @@ export function getIngredientsList() {
   };
 }
 
-export function placeOrder(ingredients) {
-  return function (dispatch) {
+export function placeOrder(ingredients: Array<TIngredient['_id']>) {
+  return function (dispatch: (arg0: { type: string; order?: number; error?: any; }) => void) {
     dispatch({
       type: PLACE_ORDER_REQUEST
     });
@@ -66,7 +67,7 @@ export function placeOrder(ingredients) {
   };
 }
 
-export function setDetailIngredient(ingredient) {
+export function setDetailIngredient(ingredient: TIngredient) {
   return { type: SET_DETAIL_INGREDIENT, payload: { ingredient } };
 }
 
@@ -78,14 +79,14 @@ export function resetOrder() {
   return { type: RESET_ORDER };
 }
 
-export function addConstructorItem(ingredientId) {
+export function addConstructorItem(ingredientId: TСonstructorIngredient['id']) {
   return { type: ADD_ITEM, payload: { ingredientId, itemId: uuidv4() } };
 }
 
-export function deleteConstructorItem(id) {
+export function deleteConstructorItem(id: TСonstructorIngredient['id']) {
   return { type: DELETE_ITEM, payload: { id } };
 }
 
-export function moveConstructorItem(id, toId) {
+export function moveConstructorItem(id: TСonstructorIngredient['id'], toId: TСonstructorIngredient['id']) {
   return { type: MOVE_ITEM, payload: { id, toId } };
 }

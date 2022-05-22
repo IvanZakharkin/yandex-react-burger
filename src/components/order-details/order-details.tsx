@@ -1,8 +1,13 @@
 import PropTypes from 'prop-types';
 import styles from './order-details.module.css';
 import checkMarkIcon from '../../images/order-check-mark.svg';
+import { TOrder } from '../../types';
 
-const OrderDetails = ({ id }) => {
+type TOrderDetails = {
+  id: TOrder['number']
+};
+
+const OrderDetails = ({ id }: TOrderDetails) => {
   return (
     <div className={styles.order}>
       <p className="text text_type_digits-large mb-8">{id}</p>

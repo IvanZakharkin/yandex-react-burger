@@ -1,5 +1,5 @@
+import { FC } from 'React'
 import { useCallback } from 'react';
-import PropTypes from 'prop-types';
 import {
   ConstructorElement,
   DragIcon
@@ -8,13 +8,21 @@ import styles from './burger-constructor-element.module.css';
 import cn from 'classnames';
 import { useDrop, useDrag } from 'react-dnd';
 import { useDispatch } from 'react-redux';
-import dndTypes from '../../dnd-types';
 import {
   deleteConstructorItem,
   moveConstructorItem
 } from '../../services/actions/builder';
+import { DND_TYPES, TDragIngredient, TСonstructorIngredient } from '../../types'
 
-const BurgerConstructorElement = (props) => {
+
+type TConstructorProps = Pick<TСonstructorIngredient, 'id' | 'price' | 'image'> & {
+  text: string;
+  type?: 'top' | 'bottom' | undefined;
+  className: string;
+  isLocked?: boolean;
+};
+
+const BurgerConstructorElement: FC<TConstructorProps> = (props) => {
   const { id, price, text, image, type, className, isLocked } = props;
   const dispatch = useDispatch();
   const deleteElement = useCallback(
@@ -27,7 +35,7 @@ const BurgerConstructorElement = (props) => {
   );
 
   const [{ isDragging }, drag, preview] = useDrag(() => ({
-    type: dndTypes.CONSTRUCTOR_ITEM,
+    type: DND_TYPES.CONSTRUCTOR_ITEM,
     item: { id },
     collect: (monitor) => ({
       isDragging: monitor.isDragging()
@@ -36,8 +44,8 @@ const BurgerConstructorElement = (props) => {
 
   const [, drop] = useDrop(
     () => ({
-      accept: dndTypes.CONSTRUCTOR_ITEM,
-      hover(item) {
+      accept: DND_TYPES.CONSTRUCTOR_ITEM,
+      hover(item: TDragIngredient) {
         if (item.id !== id && !isLocked) {
           moveElement(item.id, id);
         }
@@ -65,7 +73,6 @@ const BurgerConstructorElement = (props) => {
       <div className={styles['constructor-element']}>
         <ConstructorElement
           type={type}
-          className="test"
           price={price}
           text={text}
           thumbnail={image}
@@ -75,16 +82,6 @@ const BurgerConstructorElement = (props) => {
       </div>
     </div>
   );
-};
-
-BurgerConstructorElement.propTypes = {
-  id: PropTypes.string.isRequired,
-  price: PropTypes.number.isRequired,
-  text: PropTypes.string.isRequired,
-  image: PropTypes.string.isRequired,
-  type: PropTypes.string,
-  className: PropTypes.string,
-  isLocked: PropTypes.bool
 };
 
 export default BurgerConstructorElement;

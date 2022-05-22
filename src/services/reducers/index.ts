@@ -6,3 +6,5 @@ export const rootReducer = combineReducers({
   builder: builderReducer,
   auth: authReducer
 });
+
+export type TRootState = ReturnType<typeof rootReducer>

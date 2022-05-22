@@ -6,35 +6,36 @@ import {
 } from '@ya.praktikum/react-developer-burger-ui-components';
 import BeatLoader from 'react-spinners/BeatLoader';
 import { updateUser } from '../../services/actions/auth';
+import { TUser, TAllUserData } from '../../types';
 
 export default function ProfileForm() {
-  const user = useSelector((state) => ({ ...state.auth.user, password: '' }));
+  const user: TUser = useSelector((state: any) => ({ ...state.auth.user, password: '' }));
   const dispatch = useDispatch();
 
-  const [form, setForm] = useState({ ...user, password: '' });
+  const [form, setForm] = useState<TAllUserData>({ ...user, password: '' });
   const [error, setError] = useState('');
   const [isSaving, setIsSaving] = useState(false);
 
-  const handlerChange = (event) => {
+  const handlerChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
     setForm({
       ...form,
       [event.target.name]: event.target.value
     });
   };
 
-  const onSubmit = (event) => {
+  const onSubmit = (event: React.FormEvent): void => {
     event.preventDefault();
     setIsSaving(true);
     setError('');
 
-    dispatch(updateUser(form))
+    dispatch<any>(updateUser(form))
       .then(() => {
         setForm({
           ...form,
           password: ''
         });
       })
-      .catch((err) => setError(err))
+      .catch((err: string) => setError(err))
       .finally(() => setIsSaving(false));
   };
 
@@ -42,7 +43,7 @@ export default function ProfileForm() {
     setForm({ ...user, password: '' });
   };
 
-  const wasChanged = Object.keys(form).some((key) => form[key] !== user[key]);
+  const wasChanged = Object.keys(form).some((key): boolean => form[key as keyof TAllUserData] !== user[key as keyof TUser]);
 
   return (
     <form onSubmit={onSubmit}>

@@ -1,20 +1,18 @@
-import React, { useCallback } from 'react';
-import PropTypes from 'prop-types';
+import React from 'react';
 import styles from './burger-ingredients-by-type.module.css';
 import BurgerIngredient from '../burger-ingredient/burger-ingredient';
-import { ingredientPropTypes } from '../../types';
 import cn from 'classnames';
-import { useDispatch } from 'react-redux';
-import { setDetailIngredient } from '../../services/actions/builder';
+import { TIngredient, TYPES_INGREDIENTS } from '../../types'
 
-const BurgerIngredientsByType = React.forwardRef(
+type TProps = {
+  title: string;
+  ingredients: Array<TIngredient>;
+  type: TYPES_INGREDIENTS;
+};
+
+const BurgerIngredientsByType = React.forwardRef<HTMLDivElement, TProps>(
   ({ type, ingredients, title }, ref) => {
     const listStyle = cn('pr-4 pl-4', styles.list);
-    const dispatch = useDispatch();
-    const setIngredientDetail = useCallback(
-      (ingredient) => dispatch(setDetailIngredient(ingredient)),
-      [dispatch]
-    );
 
     if (ingredients.length === 0) {
       return null;
@@ -31,7 +29,6 @@ const BurgerIngredientsByType = React.forwardRef(
               price={ingredient.price}
               title={ingredient.name}
               id={ingredient._id}
-              onClick={() => setIngredientDetail(ingredient)}
             />
           ))}
         </ul>
@@ -39,11 +36,5 @@ const BurgerIngredientsByType = React.forwardRef(
     );
   }
 );
-
-BurgerIngredientsByType.propTypes = {
-  title: PropTypes.string.isRequired,
-  ingredients: PropTypes.arrayOf(ingredientPropTypes),
-  type: PropTypes.string.isRequired
-};
 
 export default BurgerIngredientsByType;

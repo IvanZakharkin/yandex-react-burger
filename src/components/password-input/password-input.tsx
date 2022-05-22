@@ -1,7 +1,16 @@
 import { useState } from 'react';
 import { Input } from '@ya.praktikum/react-developer-burger-ui-components';
+import { TYPES_FIELDS } from '../../types'
 
-export default function PasswordInput({ type, ...props }) {
+type TPasswordInput = {
+  type: TYPES_FIELDS,
+  value: string;
+  onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  key: string;
+  disabled: boolean;
+};
+
+const PasswordInput = ({ type, ...props }: TPasswordInput) => {
   const [isShowed, setIsShowed] = useState(false);
   return (
     <div className="mb-6">
@@ -14,3 +23,5 @@ export default function PasswordInput({ type, ...props }) {
     </div>
   );
 }
+
+export default PasswordInput;

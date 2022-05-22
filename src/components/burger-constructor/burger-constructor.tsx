@@ -8,16 +8,16 @@ import styles from './burger-constructor.module.css';
 import cn from 'classnames';
 import { useDrop } from 'react-dnd';
 import { useDispatch, useSelector } from 'react-redux';
-import dndTypes from '../../dnd-types';
 import { addConstructorItem, placeOrder } from '../../services/actions/builder';
 import BeatLoader from 'react-spinners/BeatLoader';
 import { useHistory } from 'react-router-dom';
+import { TСonstructorIngredient, DND_TYPES, TDragIngredient } from '../../types';
 
 const BurgerConstructor = () => {
-  const ingredients = useSelector((state) => state.builder.items);
-  const orderRequest = useSelector((state) => state.builder.orderRequest);
-  const orderError = useSelector((state) => state.builder.orderError);
-  const user = useSelector((state) => state.auth.user);
+  const ingredients: Array<TСonstructorIngredient> = useSelector((state: any) => state.builder.items);
+  const orderRequest = useSelector((state: any) => state.builder.orderRequest);
+  const orderError = useSelector((state: any) => state.builder.orderError);
+  const user = useSelector((state: any) => state.auth.user);
 
   const history = useHistory();
 
@@ -37,14 +37,14 @@ const BurgerConstructor = () => {
   const dispatch = useDispatch();
 
   const [, dropTarget] = useDrop({
-    accept: dndTypes.INGREDIENT,
-    drop(item) {
+    accept: DND_TYPES.INGREDIENT,
+    drop(item: TDragIngredient) {
       dispatch(addConstructorItem(item.id));
     }
   });
 
   const noBun = ingredients.length && !bun;
-  const toOrder = () => {
+  const toOrder = (): void => {
     if (!user) {
       history.replace({
         pathname: '/login'
@@ -84,7 +84,6 @@ const BurgerConstructor = () => {
             const style = index === otherIngredients.length - 1 ? '' : 'pb-4';
             return (
               <BurgerConstructorElement
-                index={index}
                 key={ingredient.id}
                 id={ingredient.id}
                 price={ingredient.price}

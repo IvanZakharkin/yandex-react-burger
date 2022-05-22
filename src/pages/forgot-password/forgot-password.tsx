@@ -1,53 +1,45 @@
-import Form from '../../components/form/form';
+import { Form } from '../../components/form/form';
 import { useSelector, useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { useHistory, Redirect } from 'react-router-dom';
-import { resetPassword } from '../../services/actions/auth';
+import { forgotPassword } from '../../services/actions/auth';
 import { useEffect } from 'react';
 import { clearError } from '../../services/actions/auth';
+import { TRootState } from '../../services/reducers'
+import { TUser, TYPES_FIELDS } from '../../types';
 
 const fields = [
   {
-    type: 'password',
-    placeholder: 'Введите новый пароль',
-    name: 'password'
-  },
-  {
-    type: 'text',
-    placeholder: 'Введите код из письма',
-    name: 'token'
+    type: TYPES_FIELDS.email,
+    placeholder: 'Укажите e-mail',
+    name: 'email'
   }
 ];
 
 export default function ForgotPasswordPage() {
-  const request = useSelector((state) => state.auth.request);
-  const user = useSelector((state) => state.auth.user);
-  const error = useSelector((state) => state.auth.error);
+  const request = useSelector((state: TRootState) => state.auth.request);
+  const error = useSelector((state: TRootState) => state.auth.error);
+  const user = useSelector((state: TRootState) => state.auth.user);
 
   const dispatch = useDispatch();
   const history = useHistory();
 
-  const onSubmit = (formData) => {
-    dispatch(resetPassword(formData)).then(() => {
-      history.replace({
-        pathname: '/login'
-      });
+  const onSubmit = (formData: Pick<TUser, 'email'>): void => {
+    dispatch<any>(forgotPassword(formData)).then(() => {
+      if (!error) {
+        history.replace({
+          pathname: '/reset-password',
+          state: {
+            from: '/forgot-password'
+          }
+        });
+      }
     });
   };
 
   useEffect(() => {
     dispatch(clearError());
   }, [dispatch]);
-
-  if (history.location.from !== '/forgot-password') {
-    return (
-      <Redirect
-        to={{
-          pathname: '/forgot-password'
-        }}
-      />
-    );
-  }
 
   if (user) {
     return (
@@ -65,7 +57,7 @@ export default function ForgotPasswordPage() {
         <Form
           title={'Восстановление пароля'}
           fields={fields}
-          buttonText={'Сохранить'}
+          buttonText={'Восстановить'}
           onSubmit={onSubmit}
           loading={request}
           error={error}

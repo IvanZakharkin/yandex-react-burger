@@ -1,4 +1,3 @@
-import PropTypes from 'prop-types';
 import styles from './burger-ingredient.module.css';
 import {
   Counter,
@@ -8,17 +7,24 @@ import cn from 'classnames';
 import { useDrag } from 'react-dnd';
 import { useSelector } from 'react-redux';
 import { useLocation, Link } from 'react-router-dom';
-import dndTypes from '../../dnd-types';
+import { DND_TYPES, TСonstructorIngredient } from '../../types';
 
-const BurgerIngredient = (props) => {
+type TIngredientProps = Pick<TСonstructorIngredient, 'image' | 'price' | 'id'> & {
+  title: string;
+  type?: 'top' | 'bottom' | undefined;
+  className?: string;
+  isLocked?: boolean;
+};
+
+const BurgerIngredient = (props: TIngredientProps) => {
   const { image, price, title, id } = props;
   const location = useLocation();
 
-  const items = useSelector((state) => state.builder.items);
+  const items: Array<TСonstructorIngredient> = useSelector((state: any) => state.builder.items);
   const count = items.filter((item) => item._id === id).length;
 
   const [, ref] = useDrag({
-    type: dndTypes.INGREDIENT,
+    type: DND_TYPES.INGREDIENT,
     item: () => {
       return { id };
     }
@@ -46,18 +52,6 @@ const BurgerIngredient = (props) => {
       <div className={styles.title}>{title}</div>
     </Link>
   );
-};
-
-BurgerIngredient.defaultProps = {
-  onClick: () => {}
-};
-
-BurgerIngredient.propTypes = {
-  image: PropTypes.string,
-  price: PropTypes.number,
-  id: PropTypes.string,
-  title: PropTypes.string,
-  onClick: PropTypes.func
 };
 
 export default BurgerIngredient;

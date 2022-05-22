@@ -12,8 +12,20 @@ import {
   DELETE_DETAIL_INGREDIENT,
   RESET_ORDER
 } from '../actions/builder';
+import { TIngredient, TСonstructorIngredient } from '../../types'
 
-const initialState = {
+type TBuilderState = {
+  detailIngredient: TIngredient | null;
+  order: number | null;
+  orderRequest: boolean;
+  orderError: string;
+  items:Array<TСonstructorIngredient>;
+  ingredientsList: ReadonlyArray<TIngredient>;
+  ingredientsListRequest: boolean;
+  ingredientsListError: string;
+};
+
+const initialState:TBuilderState = {
   detailIngredient: null,
 
   order: null,
@@ -27,7 +39,7 @@ const initialState = {
   ingredientsListError: ''
 };
 
-export const builderReducer = (state = initialState, action) => {
+export const builderReducer = (state = initialState, action: { type: any; ingredients: any; error: any; order: any; payload: { id?: any; toId?: any; ingredient?: any; ingredientId?: any; itemId?: any; }; }) => {
   switch (action.type) {
     case GET_INGREDIENTS_LIST_REQUEST: {
       return {

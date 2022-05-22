@@ -13,7 +13,7 @@ import {
 } from '../../services/actions/builder';
 
 const ConstructorPage = () => {
-  const { order, detailIngredient } = useSelector((state) => ({
+  const { order, detailIngredient } = useSelector((state: any) => ({
     order: state.builder.order,
     detailIngredient: state.builder.detailIngredient
   }));
@@ -31,7 +31,7 @@ const ConstructorPage = () => {
         </DndProvider>
         {detailIngredient && (
           <Modal onClose={onCloseModal} title="Детали ингридиента">
-            <IngredientDetails detailIngredient={detailIngredient} />
+            <IngredientDetails />
           </Modal>
         )}
         {order && (

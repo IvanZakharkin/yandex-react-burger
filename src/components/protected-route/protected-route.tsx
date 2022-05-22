@@ -1,8 +1,9 @@
+import { FC } from 'react';
 import { useSelector } from 'react-redux';
-import { Redirect, Route } from 'react-router-dom';
+import { Redirect, Route, RouteProps } from 'react-router-dom';
 
-export function ProtectedRoute({ children, ...rest }) {
-  const user = useSelector((state) => state.auth.user);
+export const ProtectedRoute: FC<RouteProps> = ({ children, ...rest }) => {
+  const user = useSelector((state: any) => state.auth.user);
 
   return (
     <Route

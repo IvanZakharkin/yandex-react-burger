@@ -8,6 +8,8 @@ import {
   logoutRequest
 } from '../../api';
 
+import { TUser, TResetPassword } from '../../types'
+
 export const REGISTRATION_REQUEST = 'REGISTRATION_REQUEST';
 export const REGISTRATION_SUCCESS = 'REGISTRATION_SUCCESS';
 export const REGISTRATION_ERROR = 'REGISTRATION_ERROR';
@@ -32,8 +34,9 @@ export const UPDATE_USER = 'UPDATE_USER';
 
 export const CLEAR_ERROR = 'CLEAR_ERROR';
 
-export function register(form) {
-  return function (dispatch) {
+
+export function register(form:TUser & { password:string }) {
+  return function (dispatch: (arg0: { type: string; payload?: { user: TUser; }; error?: any; }) => void) {
     dispatch({
       type: REGISTRATION_REQUEST
     });
@@ -56,8 +59,8 @@ export function register(form) {
   };
 }
 
-export function auth(form) {
-  return function (dispatch) {
+export function auth(form:Pick<TUser, 'email'> & { password:string }) {
+  return function (dispatch: (arg0: { type: string; payload?: { user: TUser; }; error?: any; }) => void) {
     dispatch({
       type: AUTH_REQUEST
     });
@@ -80,8 +83,8 @@ export function auth(form) {
   };
 }
 
-export function forgotPassword(form) {
-  return function (dispatch) {
+export function forgotPassword(form:Pick<TUser, 'email'>) {
+  return function (dispatch: (arg0: { type: string; error?: any; }) => void) {
     dispatch({
       type: FORGOT_PASSWORD_REQUEST
     });
@@ -105,8 +108,8 @@ export function forgotPassword(form) {
   };
 }
 
-export function resetPassword(form) {
-  return function (dispatch) {
+export function resetPassword(form:TResetPassword) {
+  return function (dispatch: (arg0: { type: string; error?: any; }) => void) {
     dispatch({
       type: RESET_PASSWORD_REQUEST
     });
@@ -131,7 +134,7 @@ export function resetPassword(form) {
 }
 
 export function getUser() {
-  return function (dispatch) {
+  return function (dispatch: (arg0: { type: string; payload: { user: TUser; }; }) => void) {
     return getUserRequest().then((user) => {
       dispatch({
         type: UPDATE_USER,
@@ -145,8 +148,8 @@ export function getUser() {
   };
 }
 
-export function updateUser(form) {
-  return function (dispatch) {
+export function updateUser(form:TUser & { password:string }) {
+  return function (dispatch: (arg0: { type: string; payload: { user: TUser; }; }) => void) {
     return updateUserRequest(form).then((user) => {
       dispatch({
         type: UPDATE_USER,
@@ -161,7 +164,7 @@ export function updateUser(form) {
 }
 
 export function logout() {
-  return function (dispatch) {
+  return function (dispatch: (arg0: { type: string; error?: any; }) => void) {
     dispatch({
       type: LOG_OUT_REQUEST
     });
