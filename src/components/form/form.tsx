@@ -1,5 +1,5 @@
 import styles from './form.module.css';
-import { useState, useMemo } from 'react';
+import React, { FC, useState, useMemo } from 'react';
 import {
   Button,
   Input
@@ -7,18 +7,32 @@ import {
 import PasswordInput from '../password-input/password-input';
 import cn from 'classnames';
 import BeatLoader from 'react-spinners/BeatLoader';
+import { TYPES_FIELDS } from '../../types'
 
-export default function Form({
-  title,
-  buttonText,
-  fields,
-  children,
-  onSubmit,
-  loading,
-  error
-}) {
+export type TFormField = {
+  name: string,
+  type: TYPES_FIELDS,
+  placeholder: string
+};
+
+export type TForm = {
+  [index: string]: string;
+};
+
+export type TFormProps = {
+  title: string;
+  buttonText: string;
+  onSubmit: (form: any) => void;
+  loading: boolean;
+  error: string;
+  fields: Array<TFormField>;
+};
+
+
+export const Form: FC<TFormProps> = (props) => {
+  const { title, buttonText, fields, children, onSubmit, loading, error } = props;
   const initialFormState = useMemo(() => {
-    return fields.reduce((acc, field) => {
+    return fields.reduce((acc: TForm, field) => {
       acc[field.name] = '';
       return acc;
     }, {});
@@ -26,14 +40,14 @@ export default function Form({
 
   const [form, setForm] = useState(initialFormState);
 
-  const handlerChange = (event) => {
+  const handlerChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
     setForm({
       ...form,
       [event.target.name]: event.target.value
     });
   };
 
-  const hanlderSubmit = (event) => {
+  const hanlderSubmit = (event: React.FormEvent): void => {
     event.preventDefault();
     onSubmit(form);
   };

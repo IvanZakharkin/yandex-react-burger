@@ -1,4 +1,4 @@
-import { useState, useRef, useMemo, useEffect } from 'react';
+import { useState, useRef, useMemo, useEffect, RefObject } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 import cn from 'classnames';
@@ -6,50 +6,63 @@ import BurgerIngredientsByType from '../burger-ingredients-by-type/burger-ingred
 import styles from './burger-ingredients.module.css';
 import { getIngredientsList } from '../../services/actions/builder';
 import RingLoader from 'react-spinners/RingLoader';
+import { TIngredient, TYPES_INGREDIENTS } from '../../types';
 
 const TAB_LIST = {
-  bun: 'Булки',
-  sauce: 'Соусы',
-  main: 'Начинки'
+  [TYPES_INGREDIENTS.bun]: 'Булки',
+  [TYPES_INGREDIENTS.sauce]: 'Соусы',
+  [TYPES_INGREDIENTS.main]: 'Начинки'
+};
+
+type TBlockTypeRefs = {
+  [TYPES_INGREDIENTS.bun]: RefObject<HTMLDivElement>;
+  [TYPES_INGREDIENTS.sauce]: RefObject<HTMLDivElement>;
+  [TYPES_INGREDIENTS.main]: RefObject<HTMLDivElement>;
 };
 
 const BurgerIngredients = () => {
-  const ingredients = useSelector((state) => state.builder.ingredientsList);
+  const ingredients: ReadonlyArray<TIngredient> = useSelector((state: any) => state.builder.ingredientsList);// tslint:disable-line
   const ingredientsListRequest = useSelector(
-    (state) => state.builder.ingredientsListRequest
+    (state: any) => state.builder.ingredientsListRequest
   );
   const ingredientsListError = useSelector(
-    (state) => state.builder.ingredientsListError
+    (state: any) => state.builder.ingredientsListError
   );
   const dispatch = useDispatch();
 
   const ingredientsByTypes = useMemo(
     () => ({
-      sauce: ingredients.filter((ingredient) => ingredient.type === 'sauce'),
-      main: ingredients.filter((ingredient) => ingredient.type === 'main'),
-      bun: ingredients.filter((ingredient) => ingredient.type === 'bun')
+      sauce: ingredients.filter((ingredient) => ingredient.type === TYPES_INGREDIENTS.sauce),
+      main: ingredients.filter((ingredient) => ingredient.type === TYPES_INGREDIENTS.main),
+      bun: ingredients.filter((ingredient) => ingredient.type === TYPES_INGREDIENTS.bun)
     }),
     [ingredients]
   );
 
-  const types = Object.keys(TAB_LIST);
-  const listRef = useRef(null);
-  const blockTypeRefs = {
-    bun: useRef(null),
-    main: useRef(null),
-    sauce: useRef(null)
+  const types = Object.values(TYPES_INGREDIENTS);
+  const listRef = useRef<HTMLDivElement>(null);
+  const blockTypeRefs: TBlockTypeRefs = {
+    bun: useRef<HTMLDivElement>(null),
+    main: useRef<HTMLDivElement>(null),
+    sauce: useRef<HTMLDivElement>(null)
   };
 
   const [activeTab, setActiveTab] = useState(types[0]);
 
-  const handlerScroll = () => {
+  const handlerScroll = (): void => {
+    if (!listRef.current) {
+      return;
+    }
     const scrollTop = listRef.current.scrollTop - 20;
-    const typeBloksBottomCoordinates = types.map((type) => {
+    const typeBloksBottomCoordinates = types.map((type): number => {
       const node = blockTypeRefs[type].current;
+      if (!node) {
+        return 0;
+      }
       return node.offsetTop + node.offsetHeight;
     });
 
-    const index = typeBloksBottomCoordinates.findIndex((b) => scrollTop <= b);
+    const index = typeBloksBottomCoordinates.findIndex((b: number): boolean => scrollTop <= b);
 
     for (let i = 0; i < types.length; i += 1) {
       const type = types[i];
@@ -60,8 +73,11 @@ const BurgerIngredients = () => {
     }
   };
 
-  const handlerTabClick = (tab) => {
-    const typeNode = blockTypeRefs[tab].current;
+  const handlerTabClick = (tab: string) => {
+    if (!listRef.current) {
+      return;
+    }
+    const typeNode = blockTypeRefs[tab as TYPES_INGREDIENTS].current;
     if (typeNode) {
       listRef.current.scrollTop = typeNode.offsetTop;
     }

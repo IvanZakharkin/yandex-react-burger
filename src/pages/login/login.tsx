@@ -1,36 +1,43 @@
-import Form from '../../components/form/form';
+import { Form } from '../../components/form/form';
 import { useSelector, useDispatch } from 'react-redux';
 import { auth } from '../../services/actions/auth';
 import { Link } from 'react-router-dom';
-import { useHistory, Redirect } from 'react-router-dom';
+import { useHistory, Redirect, useLocation } from 'react-router-dom';
 import { useEffect } from 'react';
 import { clearError } from '../../services/actions/auth';
+import { TAllUserData, TYPES_FIELDS } from '../../types';
 
 const fields = [
   {
-    type: 'email',
+    type: TYPES_FIELDS.email,
     placeholder: 'E-mail',
     name: 'email'
   },
   {
-    type: 'password',
+    type: TYPES_FIELDS.password,
     placeholder: 'Пароль',
     name: 'password'
   }
 ];
 
+type TCustomLocation = {
+  from?: Location
+};
+
 export default function LoginPage() {
-  const request = useSelector((state) => state.auth.request);
-  const user = useSelector((state) => state.auth.user);
-  const error = useSelector((state) => state.auth.error);
+  const request = useSelector((state: any) => state.auth.request);
+  const user = useSelector((state: any) => state.auth.user);
+  const error = useSelector((state: any) => state.auth.error);
 
   const dispatch = useDispatch();
   const history = useHistory();
+  const location = useLocation<TCustomLocation>();
 
-  const onSubmit = (formData) => {
-    dispatch(auth(formData)).then(() => {
+  const onSubmit = (formData: Omit<TAllUserData, 'name'>): void => {
+    dispatch<any>(auth(formData)).then(() => {
+      console.log(location);
       history.replace({
-        pathname: history.location?.state?.from || '/'
+        pathname: location?.state?.from?.pathname || '/'
       });
     });
   };

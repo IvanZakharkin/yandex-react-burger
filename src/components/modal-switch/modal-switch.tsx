@@ -14,9 +14,14 @@ import {
 import { ProtectedRoute } from '../protected-route/protected-route';
 import Modal from '../modal/modal';
 import IngredientDetails from '../ingredient-details/ingredient-details';
+import { Location } from "history";
+
+type TLocationState = {
+  background: Location
+};
 
 export default function ModalSwitch() {
-  const location = useLocation();
+  const location = useLocation<TLocationState>();
   const history = useHistory();
   let background = location.state && location.state.background;
 

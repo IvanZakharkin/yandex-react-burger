@@ -5,16 +5,17 @@ import { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import RingLoader from 'react-spinners/RingLoader';
 import { getIngredientsList } from '../../services/actions/builder';
+import { TIngredient } from '../../types';
 
 const IngredientDetails = ({ notShowTitle = false }) => {
   const dispatch = useDispatch();
 
-  const { ingredientId } = useParams();
-  const detailIngredient = useSelector((state) =>
-    state.builder.ingredientsList.find((item) => item._id === ingredientId)
+  const { ingredientId } = useParams<{ingredientId?: TIngredient['_id']}>();
+  const detailIngredient = useSelector((state:any) =>
+    state.builder.ingredientsList.find((item:TIngredient) => item._id === ingredientId)
   );
   const ingredientsListRequest = useSelector(
-    (state) => state.builder.ingredientsListRequest
+    (state:any) => state.builder.ingredientsListRequest
   );
 
   const nutritionalValueTitles = {
@@ -45,7 +46,7 @@ const IngredientDetails = ({ notShowTitle = false }) => {
   return (
     <div className={styles.content}>
       {!notShowTitle && (
-        <div class="text text_type_main-large mb-6">Детали ингредиента</div>
+        <div className="text text_type_main-large mb-6">Детали ингредиента</div>
       )}
       <div className={cn('mb-4 mt-6', styles.pic)}>
         <img

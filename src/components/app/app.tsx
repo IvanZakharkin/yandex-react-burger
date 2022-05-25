@@ -1,3 +1,4 @@
+import { FC } from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
 import ModalSwitch from '../modal-switch/modal-switch';
 import styles from './app.module.css';
@@ -6,13 +7,14 @@ import { useState, useEffect } from 'react';
 import { getUser } from '../../services/actions/auth';
 import AppHeader from '../app-header/app-header';
 
-const App = () => {
+const App:FC = () => {
   const [isUserLoaded, setIsUserLoaded] = useState(false);
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(getUser())
-      .catch((err) => console.log(err))
+    const res:any = dispatch(getUser());
+    
+    res.catch((err:string) => console.log(err))
       .finally(() => setIsUserLoaded(true));
   }, [dispatch]);
 
